@@ -1,0 +1,24 @@
+<select (change)="filterByCategory($event)">
+  <option value="all">Todas</option>
+  <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+</select>
+<p *ngIf="filteredImages.length === 0">No hay imágenes disponibles en esta categoría.</p>
+
+<div class="gallery">
+  <div *ngFor="let image of filteredImages" class="image-card">
+    <img [src]="image.imageUrl" [alt]="image.title" (click)="showDetails(image)" />
+    <h3>{{ image.title }}</h3>
+    <p>{{ image.description }}</p>
+    <button (click)="toggleFavorite(image)">
+      {{ isFavorite(image) ? 'Quitar de Favoritos' : 'Agregar a Favoritos' }}
+    </button>
+  </div>
+</div>
+
+<div *ngIf="selectedImage" class="modal">
+  <h2>{{ selectedImage.title }}</h2>
+  <img [src]="selectedImage.imageUrl" [alt]="selectedImage.title" />
+  <p>Fecha: {{ selectedImage.date }}</p>
+  <p>{{ selectedImage.description }}</p>
+  <button (click)="closeDetails()">Cerrar</button>
+</div>
